@@ -1,0 +1,44 @@
+apply plugin: "application"
+
+mainClassName = ""
+
+ext.jackson_version='2.4.4'
+ext.spring_framework_version='4.0.6.RELEASE'
+
+dependencies {
+    /*
+     * CORE SPRING FRAMEWORK DEPENDENCIES
+     * Depending injection, asynchronous execution, task scheduling, aspect oriented proxies, and more.
+     */
+     compile "org.springframework:spring-core:${project.spring_framework_version}"
+     compile "org.springframework:spring-beans:${project.spring_framework_version}"
+     compile "org.springframework:spring-context:${project.spring_framework_version}"
+     compile "org.springframework:spring-aop:${project.spring_framework_version}"
+     compile "org.springframework:spring-web:${project.spring_framework_version}"
+     compile "org.springframework:spring-webmvc:${project.spring_framework_version}"
+     compile "org.springframework:spring-test:${project.spring_framework_version}"
+
+    /*
+     * Metrics
+     * Awesome reporting-- defaults to Graphite
+     */
+    compile 'com.ryantenney.metrics:metrics-spring:3.0.1'
+
+    /*
+     * GUAVA
+     * EventBus, FluentIterables, ListenableFutures and more
+     */
+    compile 'com.google.guava:guava:18.0'
+
+    /*
+     * APACHE COMMONS
+     * Logging, StringUtils, RandomStringUtils, IOUtils, and more
+     */
+    compile 'commons-codec:commons-codec:1.9'
+    compile 'org.apache.commons:commons-math3:3.2'
+
+    /*
+     * TESTING
+     */
+    compile 'junit:junit:4.11'
+}

@@ -1,0 +1,41 @@
+description = "Kryptnostic Java Multivariate Polynomial Crypto Libraries"
+
+repositories {
+  maven {
+    url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+  }
+}
+
+dependencies {
+    /*
+     * GUAVA
+     * EventBus, FluentIterables, ListenableFutures and more
+     */
+    compile 'com.google.guava:guava:18.0'
+
+    /*
+     * APACHE COMMONS
+     * Logging, StringUtils, RandomStringUtils, IOUtils, and more
+     */
+    compile 'commons-codec:commons-codec:1.9'
+    compile 'org.apache.commons:commons-math3:3.2'
+
+    /*
+     * TESTING
+     */
+    testCompile 'junit:junit:4.11'
+    if( project.hasProperty('developmentMode') && project.developmentMode ) {
+        logger.quiet("$project.name is using project dependencies.")
+        compile( project(":fhe-core:kryptnostic-api") )
+        testCompile( project(":fhe-core:kryptnostic-test") )
+    } else if( project.hasProperty( 'standaloneMode' ) && project.standaloneMode ) {
+        logger.quiet("$project.name is using standalone project dependencies.")
+        compile( project(":kryptnostic-api") )
+        testCompile( project(":kryptnostic-test") )
+
+    } else {
+        logger.quiet("$project.name is using jar dependencies.")
+        compile "com.kryptnostic:kryptnostic-api:$version"
+        testCompile "com.kryptnostic:kryptnostic-test:$version"
+    }
+}

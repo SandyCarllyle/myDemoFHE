@@ -1,0 +1,41 @@
+apply plugin: "application"
+
+mainClassName = ""
+
+repositories {
+  maven {
+    url "https://build.shibboleth.net/nexus/content/groups/public/"
+  }
+  maven {
+    url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+  }
+}
+
+dependencies {
+    /*
+     * Metrics
+     * Awesome reporting-- defaults to Graphite
+     */
+    compile 'com.codahale.metrics:metrics-annotation:3.0.2'
+
+    /*
+     * GUAVA
+     * EventBus, FluentIterables, ListenableFutures and more
+     */
+    compile 'com.google.guava:guava:18.0'
+
+    /*
+     * TESTING
+     */
+    testCompile 'junit:junit:4.11'
+    if( project.hasProperty('developmentMode') && project.developmentMode ) {
+        logger.quiet("$project.name is using project dependencies.")
+        testCompile( project(":fhe-core:kryptnostic-test") )
+    } else if( project.hasProperty( 'standaloneMode' ) && project.standaloneMode ) {
+        logger.quiet("$project.name is using standalone project dependencies.")
+        testCompile( project(":kryptnostic-test") )
+    } else {
+        logger.quiet(project.name + " using jar dependencies.")
+        testCompile "com.kryptnostic:kryptnostic-test:$version"
+    }
+}
